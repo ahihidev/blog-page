@@ -1,0 +1,60 @@
+
+---
+
+### 🔧 **Lệnh triển khai (deploy)**
+
+| Lệnh                           | Chức năng                                  |
+| ------------------------------ | ------------------------------------------ |
+| `vercel`                       | Deploy bản preview (development)           |
+| `vercel --prod`                | Deploy bản production                      |
+| `vercel --confirm`             | Deploy không cần hỏi (auto confirm tất cả) |
+| `vercel --name <project-name>` | Đặt tên cho dự án khi deploy               |
+| `vercel -t <token>`            | Deploy với token (hữu ích trong CI/CD)     |
+
+---
+
+### 🔗 **Lệnh liên kết & cấu hình dự án**
+
+| Lệnh                | Chức năng                                        |
+| ------------------- | ------------------------------------------------ |
+| `vercel link`       | Liên kết thư mục local với 1 project trên Vercel |
+| `vercel unlink`     | Gỡ liên kết với project Vercel                   |
+| `vercel project ls` | Liệt kê các project của bạn                      |
+| `vercel switch`     | Đổi giữa các tài khoản hoặc team                 |
+
+---
+
+### 🔐 **Lệnh quản lý biến môi trường**
+
+| Lệnh                          | Chức năng                                                     |
+| ----------------------------- | ------------------------------------------------------------- |
+| `vercel env add <name> <env>` | Thêm biến môi trường (`development`, `preview`, `production`) |
+| `vercel env rm <name> <env>`  | Xoá biến môi trường                                           |
+| `vercel env ls`               | Xem danh sách biến môi trường                                 |
+| `vercel env pull`             | Tải `.env` từ Vercel về máy                                   |
+| `vercel env`                  | Quản lý biến môi trường qua giao diện CLI                     |
+
+---
+
+### 🗑️ **Lệnh quản lý deployment**
+
+| Lệnh                     | Chức năng                                     |
+| ------------------------ | --------------------------------------------- |
+| `vercel ls`              | Liệt kê các lần deploy                        |
+| `vercel rm <deployment>` | Xoá 1 deployment                              |
+| `vercel --force`         | Ép deploy lại ngay cả khi không thay đổi code |
+
+---
+
+### 📦 **Khác**
+
+| Lệnh             | Chức năng                             |
+| ---------------- | ------------------------------------- |
+| `vercel login`   | Đăng nhập                             |
+| `vercel logout`  | Đăng xuất                             |
+| `vercel whoami`  | Xem đang đăng nhập bằng tài khoản nào |
+| `vercel help`    | Hiển thị trợ giúp CLI                 |
+| `vercel --debug` | Hiển thị log chi tiết khi gặp lỗi     |
+
+---
+

@@ -1,9 +1,47 @@
 import axios from "axios";
 
+// Tạo instance axios với cấu hình mặc định
+const api = axios.create({
+  baseURL: 'https://blog-server-phi-five.vercel.app', // URL backend trực tiếp
+  timeout: 10000,
+  headers: {
+    'Content-Type': 'application/json'
+  }
+});
+
+// Thêm interceptor để log requests
+api.interceptors.request.use(
+  (config) => {
+    console.log('Request:', config.url, config.method);
+    return config;
+  },
+  (error) => {
+    console.error('Request Error:', error);
+    return Promise.reject(error);
+  }
+);
+
+// Thêm interceptor để log responses
+api.interceptors.response.use(
+  (response) => {
+    console.log('Response:', response.status, response.config.url);
+    return response;
+  },
+  (error) => {
+    console.error('Response Error:', {
+      url: error.config?.url,
+      method: error.config?.method,
+      status: error.response?.status,
+      message: error.message
+    });
+    return Promise.reject(error);
+  }
+);
+
 // Lấy danh sách tất cả blog từ server
 export const getBlogs = async () => {
   try {
-    const res = await axios.get(`${import.meta.env.VITE_APP_SERVER_URL}/blog`);
+    const res = await api.get('/blog');
     return res.data;
   } catch (error) {
     console.error("Error fetching blogs:", error);
@@ -14,9 +52,7 @@ export const getBlogs = async () => {
 // Xóa blog theo ID
 export const deleteBlogById = async (id) => {
   try {
-    const res = await axios.delete(
-      `${import.meta.env.VITE_APP_SERVER_URL}/blog/remove/${id}`
-    );
+    const res = await api.delete(`/blog/remove/${id}`);
     return res.data.status;
   } catch (error) {
     console.error("Error deleting blog:", error);
@@ -27,10 +63,7 @@ export const deleteBlogById = async (id) => {
 // Chỉnh sửa blog theo ID
 export const editBlogById = async (id, data) => {
   try {
-    const res = await axios.patch(
-      `${import.meta.env.VITE_APP_SERVER_URL}/blog/edit/${id}`,
-      data
-    );
+    const res = await api.patch(`/blog/edit/${id}`, data);
     return res.data.status;
   } catch (error) {
     console.error("Error editing blog:", error);
@@ -38,13 +71,10 @@ export const editBlogById = async (id, data) => {
   }
 };
 
-// Cập nhật blog theo ID (khác với edit, có thể cập nhật toàn bộ dữ liệu)
+// Cập nhật blog theo ID
 export const updateBlogById = async (id, data) => {
   try {
-    const res = await axios.patch(
-      `${import.meta.env.VITE_APP_SERVER_URL}/blog/update/${id}`,
-      data
-    );
+    const res = await api.patch(`/blog/update/${id}`, data);
     return res.data.status;
   } catch (error) {
     console.error("Error updating blog:", error);
@@ -55,10 +85,7 @@ export const updateBlogById = async (id, data) => {
 // Tạo mới một blog
 export const createBlog = async (data) => {
   try {
-    const res = await axios.post(
-      `${import.meta.env.VITE_APP_SERVER_URL}/blog/create`,
-      data
-    );
+    const res = await api.post('/blog/create', data);
     return res.data.status;
   } catch (error) {
     console.error("Error creating blog:", error);
@@ -69,9 +96,7 @@ export const createBlog = async (data) => {
 // Lấy thông tin chi tiết của một blog theo ID
 export const getBlogById = async (id) => {
   try {
-    const res = await axios.get(
-      `${import.meta.env.VITE_APP_SERVER_URL}/blog/${id}`
-    );
+    const res = await api.get(`/blog/${id}`);
     return res.data;
   } catch (error) {
     console.error("Error fetching blog:", error);
